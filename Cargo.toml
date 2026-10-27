@@ -1,0 +1,12 @@
+[package]
+name = "asus-diag-efi"
+version = "0.3.0"
+edition = "2021"
+[dependencies]
+uefi = { version = "0.33", features = ["alloc", "global_allocator", "panic_handler", "logger"] }
+log = { version = "0.4", default-features = false }
+[profile.release]
+opt-level = "z"
+lto = true
+codegen-units = 1
+panic = "abort"
