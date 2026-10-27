@@ -10,3 +10,6 @@ opt-level = "z"
 lto = true
 codegen-units = 1
 panic = "abort"
+[[bin]]
+name = "asus-diag-efi"
+path = "src/main.rs"
