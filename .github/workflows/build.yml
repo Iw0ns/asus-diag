@@ -1,0 +1,24 @@
+name: Compilar Binario UEFI
+on:
+  push:
+    branches: [ "main", "master" ]
+  workflow_dispatch: # Permite compilar manualmente con un clic en GitHub
+jobs:
+  build-uefi:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar codigo
+        uses: actions/checkout@v4
+      - name: Instalar Rust y Target UEFI
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: x86_64-unknown-uefi
+      - name: Compilar archivo EFI
+        run: cargo build --release --target x86_64-unknown-uefi
+      - name: Renombrar para arranque directo
+        run: cp target/x86_64-unknown-uefi/release/asus-diag-efi.efi target/BOOTX64.EFI
+      - name: Subir binario como artefacto descargable
+        uses: actions/upload-artifact@v4
+        with:
+          name: ASUS-DIAG-BOOTX64
+          path: target/BOOTX64.EFI
