@@ -2,13 +2,15 @@ name: Compilar Binario UEFI
 on:
   push:
     branches: [ "main", "master" ]
-  workflow_dispatch: # Permite compilar manualmente con un clic en GitHub
+  workflow_dispatch:
 jobs:
   build-uefi:
     runs-on: ubuntu-latest
     steps:
       - name: Descargar codigo
         uses: actions/checkout@v4
+      - name: Ver archivos
+        run: ls -R
       - name: Instalar Rust y Target UEFI
         uses: dtolnay/rust-toolchain@stable
         with:
